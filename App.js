@@ -1,70 +1,51 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Modal } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 
-import Entrar from './src/Entrar'
+import api from './src/services/api';
+import Filmes from './src/Filmes';
 
 export default class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      modalv: false
-    }
-    this.entrar = this.entrar.bind(this)
-    this.sair = this.sair.bind(this)
+      filmes: [],
+      loading: true,
+    };
   }
-  entrar() {
-    this.setState({ modalv: true })
-  }
-  sair(visible) {
-    this.setState({ modalv: visible })
+ 
+  async componentDidMount() {
+    const response = await api.get('r-api/?api=filmes');
+    this.setState({
+      filmes: response.data,
+      loading: false,
+    });
   }
 
   render() {
-    return (
-      <View style={styles.container}>
+    if (this.state.loading) {
+      return(
+        <View style={{alignItems:'center', justifyContent: 'center', flex: 1}}>
+          
+          <ActivityIndicator color='#09A6FF' size={40} />
 
-        <Button title='entrar' onPress={this.entrar} />
-
-        <Modal animationType='slide' visible={this.state.modalv} >
-          <Entrar fechar={() => this.sair(false)} />
-        </Modal>
-
-      </View>
-    );
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.container}>
+          <FlatList
+            data={this.state.filmes}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <Filmes data={item} />}
+          />
+        </View>
+      );
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
     flex: 1,
-    marginTop: 20,
-    alignItems: 'center'
   },
-  viewinp: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  input: {
-    width: 310,
-    height: 40,
-    borderColor: '#000',
-    borderWidth: 1,
-    padding: 10,
-  },
-  botao: {
-    backgroundColor: '#222',
-    color: '#fff',
-    height: 40,
-    padding: 10,
-    marginLeft: 3
-  },
-  nome: {
-    fontSize: 30,
-    textAlign: 'center',
-    marginTop: 15
-  }
-
 });
-
