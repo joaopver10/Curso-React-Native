@@ -1,93 +1,43 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react'
-import AsyncStorage from '@react-native-community/async-storage'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import Icon from 'react-native-vector-icons/Ionicons'
 
+import Home from './src/pages/Home'
+import Sobre from './src/pages/Sobre'
+import Contato from './src/pages/Contato'
 
+const Tab = createBottomTabNavigator()
+
+const icone = {
+  Home: {
+    name: 'ios-home'
+  },
+  Sobre: {
+    name: 'ios-people'
+  },
+  Contato: {
+    name: 'ios-call'
+  }
+}
 
 export default function App() {
-
-  const [nome, setNome] = useState('')
-  const [input, setInput] = useState('')
-  const nomeRef = useRef(null)
-
-  //ComponentDidMount
-  useEffect(() => {
-
-    async function getStorage() {
-      const nomeStorage = await AsyncStorage.getItem('nomes')
-      if (nomeStorage !== null) {
-        setNome(nomeStorage)
-      }
-    }
-
-    getStorage()
-
-  }, [])
-  // ComponentDidUpdate
-  useEffect(() => {
-
-    async function saveStorage() {
-      await AsyncStorage.setItem('nomes', nome)
-    }
-
-    saveStorage()
-
-  }, [nome])
-
-  function alterarnome() {
-    setNome(input)
-    setInput('')
-  }
-  function novoNome() {
-   nomeRef.current.focus()
-  }
-
-
-  const letrasNome = useMemo(() => {
-    return nome.length
-  }, [nome])
-
-
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
+      <Tab.Navigator screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, size }) => {
+          const { name } = icone[route.name]
+          return <Icon name={name} color={color} size={size} />
+        }
+      })}>
 
-      <TextInput placeholder='Escreva seu nome' value={input} onChangeText={(texto) => setInput(texto)}
-      ref={nomeRef}
-      />
-
-      <TouchableOpacity style={styles.btn} onPress={alterarnome}>
-        <Text style={styles.btnText}> Alterar nome</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.texto}> {nome} </Text>
-      <Text style={styles.texto}> Tem {letrasNome} letras </Text>
-
-      <TouchableOpacity onPress={novoNome}>
-        <Text>Novo Nome</Text>
-      </TouchableOpacity>
-
-    </View>
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Sobre" component={Sobre} />
+        <Tab.Screen name="Contato" component={Contato} />
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
 
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 25
-  },
-  texto: {
-    color: '#000',
-    fontSize: 35
-
-  },
-  btn: {
-    backgroundColor: '#222',
-    alignItems: 'center'
-  },
-  btnText: {
-    color: '#FFF'
-  }
-
-})
