@@ -1,14 +1,10 @@
-import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
-import { useNavigation, StackActions } from '@react-navigation/native'
-
+import React from 'react';
+import { View, Text} from 'react-native';
 
 export default function Sobre() {
-    return (
-        <View>
-            <Text>Sobre</Text>
-        </View>
-    )
+ return (
+   <View>
+     <Text>Sobre</Text>
+   </View>
+  );
 }
-
-
