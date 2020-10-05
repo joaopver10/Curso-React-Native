@@ -1,13 +1,21 @@
-import React, {useState}from 'react'
+import React, {useState, useContext}from 'react'
 import { View, Text, Platform } from 'react-native'
 import {Background, Container, Logo, AreaInput, Input, SubmitButton,
      SubmitText,} from '../SignIn/styles'
 
+ import { AuthContext } from '../../contexts/auth'
      
 export default function Cadastro() {
+
     const[nome, setNome] = useState('')
     const[email, setEmail] = useState('')
     const[senha, setSenha] = useState('')
+
+    const {cadUsuario} = useContext(AuthContext)
+
+    function cadastrando(){
+        cadUsuario(email, senha, nome)
+    }
 
     return (
         <Background>
@@ -15,33 +23,33 @@ export default function Cadastro() {
             enabled
             >
                 <AreaInput>
-                    <Input placaholder='nome'
+                    <Input placeholder='nome'
                     autoCorrect={false}
                     autoCapitalize='none'
                     value={nome}
-                    onChange={ ( text) => setNome(text)}
+                    onChangeText={ ( text) => setNome(text)}
                     />
                 </AreaInput>
 
                 <AreaInput>
-                    <Input placaholder='Email'
+                    <Input placeholder='Email'
                     autoCorrect={false}
                     autoCapitalize='none'
                     value={email}
-                    onChange={ ( text) => setEmail(text)}
+                    onChangeText={ ( text) => setEmail(text)}
                     />
                 </AreaInput>
 
                 <AreaInput>
-                    <Input placaholder='Senha'
+                    <Input placeholder='Senha'
                     autoCorrect={false}
                     autoCapitalize='none'
                     value={senha}
-                    onChange={ ( text) => setSenha(text)}
+                    onChangeText={ (text) => setSenha(text)}
                     />
                 </AreaInput>
 
-                <SubmitButton>
+                <SubmitButton onPress={cadastrando}>
                     <SubmitText> Cadastrar </SubmitText>
                 </SubmitButton>
 

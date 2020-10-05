@@ -1,14 +1,16 @@
-import React, {useState}from 'react'
+import React, {useState, useContext}from 'react'
 import { View, Text, Platform } from 'react-native'
 import {Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, Link, LinkText} from './styles'
 import {useNavigation} from '@react-navigation/native'
-
+import AuthContext from  '../../contexts/auth'
 
 export default function SignIn() {
 
     const navigation = useNavigation()
     const[email, setEmail] = useState('')
     const[senha, setSenha] = useState('')
+
+    //const {user} = useContext(AuthContext)
 
     return (
         <Background>
@@ -17,7 +19,7 @@ export default function SignIn() {
             >
                 <Logo source={require('../../assets/Logo.png')}/>
                 <AreaInput>
-                    <Input placaholder='Email'
+                    <Input placeholder='Email'
                     autoCorrect={false}
                     autoCapitalize='none'
                     value={email}
@@ -26,7 +28,7 @@ export default function SignIn() {
                 </AreaInput>
 
                 <AreaInput>
-                    <Input placaholder='Senha'
+                    <Input placeholder='Senha'
                     autoCorrect={false}
                     autoCapitalize='none'
                     value={senha}
