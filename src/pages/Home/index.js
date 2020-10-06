@@ -7,7 +7,7 @@ export default function Home(){
     return(
         <View>
             <Text>Home </Text>
-            <Button title='sair da conta' onPress={ () => deslogando()}>Sair da conta</Button>
+            <Button title='sair da conta' onPress={ () => deslogando()}/>
         </View>
     )
 }
