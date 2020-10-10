@@ -6,7 +6,7 @@ import HistoricoList from '../../components/HistoricoList'
 
 export default function Home() {
     const { user } = useContext(AuthContext)
-    const [ historico, setHistorico ] = useState([
+    const [historico, setHistorico] = useState([
         { key: '1', tipo: 'receita', valor: 1200 },
         { key: '2', tipo: 'despesa', valor: 1220 },
         { key: '3', tipo: 'despesa', valor: 1400 },
@@ -17,7 +17,7 @@ export default function Home() {
         <Background>
             <Header />
             <Container>
-                <Nome>Joao</Nome>
+                <Nome>{user && user.nome}</Nome>
                 <Saldo>123,00</Saldo>
             </Container>
             <Title>Ultimas movimentações</Title>
@@ -25,7 +25,7 @@ export default function Home() {
             <List showsVerticalScrollIndicator={false}
                 data={historico}
                 keyExtractor={item => item.key}
-                renderItem={ ({ item }) => ( <HistoricoList data={item}/> )}
+                renderItem={({ item }) => (<HistoricoList data={item} />)}
             />
         </Background>
     )

@@ -2616,6 +2616,11 @@ css-to-react-native@^3.0.0:
     css-color-keywords "^1.0.0"
     postcss-value-parser "^4.0.2"
 
+date-fns@^2.16.1:
+  version "2.16.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.16.1.tgz#05775792c3f3331da812af253e1a935851d3834b"
+  integrity sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==
+
 dayjs@^1.8.15:
   version "1.8.35"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.35.tgz#67118378f15d31623f3ee2992f5244b887606888"
@@ -5388,6 +5393,14 @@ react-native-iphone-x-helper@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
+
+react-native-picker-select@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-8.0.1.tgz#71433a01d16b80984187db2c38bcb229874110b0"
+  integrity sha512-e9mfr13/M3Jl6Ju2g7n2flaVOKiysomF41ful0rZONtvSS3xlMLb+PtRw74A2qUCeNefIRS2XleU16zHBK3YPQ==
+  dependencies:
+    "@react-native-community/picker" "1.6.0"
+    lodash.isequal "^4.5.0"
 
 react-native-reanimated@~1.9.0:
   version "1.9.0"
