@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
-import { View, Text, Platform } from 'react-native'
+import { View, Text, Platform, ActivityIndicator } from 'react-native'
 import { Background, Container, Logo, AreaInput, Input, SubmitButton, SubmitText, Link, LinkText } from './styles'
 import { useNavigation } from '@react-navigation/native'
-import {AuthContext} from '../../contexts/auth'
+import { AuthContext } from '../../contexts/auth'
 
 export default function SignIn() {
     const navigation = useNavigation()
@@ -11,9 +11,9 @@ export default function SignIn() {
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
 
-    const {usuarioEntrando} = useContext(AuthContext)
+    const { usuarioEntrando, loadingAuth } = useContext(AuthContext)
 
-    function entrar(){
+    function entrar() {
         usuarioEntrando(email, senha)
     }
 
@@ -38,11 +38,19 @@ export default function SignIn() {
                         autoCapitalize='none'
                         value={senha}
                         onChangeText={(text) => setSenha(text)}
+                        secureTextEntry={true}
                     />
                 </AreaInput>
 
                 <SubmitButton onPress={entrar}>
-                    <SubmitText> Acessar </SubmitText>
+                    {
+                        loadingAuth ? (
+                            <ActivityIndicator size={20} color="#FFF" />
+                        ) : (
+                                <SubmitText> Acessar </SubmitText>
+                            )
+                    }
+
                 </SubmitButton>
 
                 <Link onPress={() => navigation.navigate('Cadastro')}>

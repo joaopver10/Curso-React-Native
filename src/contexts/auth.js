@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from 'react'
 import firebase from '../services/firebasecConnection'
 import AsyncStorage from '@react-native-community/async-storage'
+import { format } from 'date-fns'
 export const AuthContext = createContext({})
 
 export default function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [load, setLoad] = useState(true)
+    const [loadingAuth, setLoadingAuth] = useState(false)
 
 
     useEffect( ()=> {
@@ -22,6 +24,7 @@ export default function AuthProvider({ children }) {
     },[])
     //logar 
     async function usuarioEntrando(email, senha) {
+        setLoadingAuth(true)
         await firebase.auth().signInWithEmailAndPassword(email, senha)
         .then(async(value) => { 
             let uid = value.user.uid
@@ -34,15 +37,18 @@ export default function AuthProvider({ children }) {
                 }
                 setUser(data)
                 storageUser(data)
+                setLoadingAuth(false)
             })
         })
             .catch((error) => {
                 alert(error.code)
+                setLoadingAuth(false)
             })
     }
 
     //cadastrando
     async function cadUsuario(email, senha, nome) {
+        setLoadingAuth(true)
         await firebase.auth().createUserWithEmailAndPassword(email, senha)
             .then(async (value) => {
                 let uid = value.user.uid
@@ -58,10 +64,12 @@ export default function AuthProvider({ children }) {
                         }
                         setUser(data)
                         storageUser(data)
+                        setLoadingAuth(false)
                     })
             })
             .catch((error) => {
                 alert(error.code)
+                setLoadingAuth(false)
             })
     }
 
@@ -77,7 +85,7 @@ export default function AuthProvider({ children }) {
         })
     }
     return (
-        <AuthContext.Provider value={{ signed: !!user, user, cadUsuario, usuarioEntrando, load, deslogando}}>
+        <AuthContext.Provider value={{ signed: !!user, user, cadUsuario, usuarioEntrando, load, deslogando, loadingAuth}}>
             {children}
         </AuthContext.Provider>
     )
